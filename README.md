@@ -10,8 +10,8 @@ Users lack emotional, personalized understanding of their carbon footprint. Simp
 
 1. **Questionnaire:** Collect lifestyle data (transport, diet, energy, shopping, flights).
 2. **AI Persona Generation:** Gemini 2.5 Flash generates a personalized name, tagline, and emotional insight.
-3. **Shareable Card:** A Spotify Wrapped-style card showing footprint, visual breakdown, and micro-action ladder.
-4. **Action Tracking:** Users log daily actions to shift their persona over time.
+3. **Shareable 3D Card:** A dual-column, interactive dark-mode card featuring 3D tilt effects, an animated count-up, and an "X Earths" visualizer.
+4. **Action Pledges:** Users log commitments directly on the card with AI-tailored micro-actions and a celebratory confetti animation.
 
 ### Tech Stack
 
@@ -23,15 +23,15 @@ Users lack emotional, personalized understanding of their carbon footprint. Simp
 
 ### Key Features
 
+- ✅ **Premium Dark Mode UI:** Glassmorphism, neon glows, and ambient mesh backgrounds.
+- ✅ **Interactive 3D Card:** Mouse-driven 3D tilt effect on the desktop persona card.
+- ✅ **Micro-Action Pledges:** Dynamic AI-generated actions with confetti commitment buttons.
+- ✅ **Rich Visualizations:** "X Earths" icons and Global Context Slider comparing to regional averages.
+- ✅ **Social Virality Loop:** Built-in QR code generator and rich OpenGraph meta tags.
+- ✅ **PWA Ready:** Installable as a Progressive Web App on mobile devices.
 - ✅ No hardcoded mock data (AI-generated personas or fallback pool)
-- ✅ All API keys in `.env.local`, never in source
 - ✅ Graceful error handling on Gemini rate limits (fallback persona pool)
-- ✅ `html2canvas` fallback if PNG download fails (copy link instead)
 - ✅ Rate-limiting on `/api/generate-persona` (10 reqs/min per IP)
-- ✅ Full Jest + Playwright test coverage
-- ✅ Mobile-first, responsive design
-- ✅ Semantic HTML with proper alt text and ARIA labels
-- ✅ Error boundary for graceful crash recovery
 
 ### Getting Started
 
