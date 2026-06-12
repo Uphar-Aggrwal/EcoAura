@@ -28,6 +28,7 @@ export interface Persona {
     energy: number;
   };
   source: 'gemini' | 'fallback' | 'calculated' | 'mock';
+  customActions: { action: string; saving: string }[];
 }
 
 export interface Action {

@@ -6,57 +6,66 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 overflow-hidden relative">
-      {/* Animated gradient background */}
+    <div className="min-h-screen flex items-center justify-center px-4 overflow-hidden relative bg-[#0b0f19]">
+      {/* Dark mode animated mesh background */}
       <div
-        className="absolute inset-0 animate-gradient"
+        className="absolute inset-0 opacity-40 animate-gradient"
         style={{
-          background: 'linear-gradient(135deg, #ecfdf5, #d1fae5, #a7f3d0, #cffafe, #ecfdf5)',
-          backgroundSize: '400% 400%',
+          background: 'radial-gradient(circle at 50% 50%, #1e293b 0%, #0b0f19 100%)',
         }}
       />
 
-      {/* Decorative floating orbs */}
-      <div className="absolute top-20 left-10 w-72 h-72 rounded-full bg-emerald-200/30 blur-3xl animate-float" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full bg-cyan-200/20 blur-3xl animate-float" style={{ animationDelay: '1.5s' }} />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-emerald-100/20 blur-3xl" />
+      {/* Decorative neon glowing orbs */}
+      <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-emerald-500/10 blur-[100px] animate-float" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-cyan-500/10 blur-[120px] animate-float" style={{ animationDelay: '2s' }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-emerald-900/20 blur-[150px]" />
 
-      <div className="text-center max-w-2xl relative z-10 animate-fadeUp">
-        {/* Emoji hero */}
-        <div className="text-7xl mb-6 animate-float">🌍</div>
+      <div className="text-center max-w-3xl relative z-10 animate-fadeUp">
+        {/* Glowing Emoji hero */}
+        <div className="text-8xl mb-8 animate-float drop-shadow-[0_0_30px_rgba(16,185,129,0.5)]">🌍</div>
 
-        <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 mb-4 tracking-tight leading-tight">
-          Know Your
-          <span className="block bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">
+        <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight leading-tight">
+          Discover Your
+          <span className="block mt-2 bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent drop-shadow-lg">
             EcoAura
           </span>
         </h1>
 
-        <p className="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed max-w-lg mx-auto">
-          Understand your carbon footprint through a personalized identity. Then log daily actions to shift your story.
+        <p className="text-lg md:text-2xl text-slate-300 mb-12 leading-relaxed max-w-2xl mx-auto font-light">
+          A premium AI experience that transforms your lifestyle data into a striking, personalized carbon identity.
         </p>
 
         <button
           id="start-journey-btn"
           onClick={() => router.push('/questionnaire')}
-          className="group relative bg-emerald-600 text-white px-10 py-5 rounded-2xl text-lg font-bold hover:bg-emerald-700 transition-all duration-300 shadow-xl shadow-emerald-600/25 hover:shadow-2xl hover:shadow-emerald-600/30 hover:scale-[1.03] active:scale-[0.98]"
+          className="group relative inline-flex items-center justify-center px-10 py-5 rounded-full text-lg font-bold text-white transition-all duration-300 transform hover:scale-[1.05] active:scale-95"
         >
-          <span className="relative z-10">Start Your Journey →</span>
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          {/* Button Glow Effect */}
+          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 blur-md opacity-70 group-hover:opacity-100 group-hover:blur-xl transition-all duration-300 animate-pulse-glow" />
+          
+          {/* Button Background */}
+          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-600 to-cyan-600 border border-white/20" />
+          
+          <span className="relative z-10 flex items-center gap-3">
+            Start Your Journey 
+            <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </span>
         </button>
 
-        <div className="mt-12 flex flex-wrap gap-6 justify-center text-sm text-gray-500">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400" />
-            AI-Powered Personas
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-slate-400 font-medium">
+          <div className="glass px-6 py-4 rounded-2xl flex flex-col items-center gap-2 hover:bg-white/5 transition-colors">
+            <span className="w-3 h-3 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]" />
+            AI-Powered Analysis
           </div>
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-teal-400" />
-            Shareable Cards
+          <div className="glass px-6 py-4 rounded-2xl flex flex-col items-center gap-2 hover:bg-white/5 transition-colors">
+            <span className="w-3 h-3 rounded-full bg-teal-400 shadow-[0_0_10px_rgba(45,212,191,0.8)]" />
+            Premium 3D Cards
           </div>
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-cyan-400" />
-            Micro-Action Tracking
+          <div className="glass px-6 py-4 rounded-2xl flex flex-col items-center gap-2 hover:bg-white/5 transition-colors">
+            <span className="w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)]" />
+            Actionable Pledges
           </div>
         </div>
       </div>

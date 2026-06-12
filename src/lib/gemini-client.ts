@@ -26,11 +26,19 @@ Generate a JSON response with EXACTLY this structure and no additional text:
   "name": "string (2-3 words, e.g., 'Sky Rider', 'Metro Maven')",
   "tagline": "string (one line, max 8 words, poetic and personal)",
   "emotionalLine": "string (2 sentences, max 30 words, making the impact visceral without judgment)",
-  "icon": "string (single emoji that represents the persona)"
+  "icon": "string (single emoji that represents the persona)",
+  "customActions": [
+    { "action": "string (specific actionable step, max 12 words)", "saving": "string (e.g., '-0.5 t')" },
+    { "action": "string (specific actionable step, max 12 words)", "saving": "string (e.g., '-0.2 t')" },
+    { "action": "string (specific actionable step, max 12 words)", "saving": "string (e.g., '-1.0 t')" }
+  ]
 }
 
 Constraints:
 - No placeholders or incomplete data.
 - The persona name and tagline should match the footprint tier: low (<3t) = positive/light, medium (3-8t) = pragmatic, high (>8t) = awakening.
-- Tone is never preachy or judgmental. Always respectful.`;
+- Tone is never preachy or judgmental. Always respectful.
+- CRITICAL LOGIC: If flights = 0, NEVER suggest taking fewer flights or switching to trains.
+- CRITICAL LOGIC: If diet is vegan or vegetarian, NEVER suggest eating less meat.
+- CRITICAL LOGIC: customActions MUST be tailored specifically to areas where they emit the most based on their questionnaire data.`;
 }

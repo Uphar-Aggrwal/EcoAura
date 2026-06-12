@@ -64,6 +64,11 @@ export async function POST(req: NextRequest) {
         breakdown: breakdown.percentages,
         breakdownTCo2: breakdown.tonnes,
         source: 'calculated',
+        customActions: [
+          { action: 'Share your zero-waste tips with the community.', saving: '-0.1 t' },
+          { action: 'Start a neighborhood composting initiative.', saving: '-0.2 t' },
+          { action: 'Advocate for local green policies.', saving: '-0.5 t' }
+        ],
       };
       return NextResponse.json(persona);
     }
@@ -76,25 +81,8 @@ export async function POST(req: NextRequest) {
         const genAI = new GoogleGenerativeAI(geminiApiKey);
         const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
-        const prompt = `You are a carbon footprint persona generator. Based on this user's data, generate a short, emotionally resonant persona.
-
-User's annual carbon footprint: ${clampedFootprint} tonnes CO₂e per year.
-That's ${(percentOfAvg / 100).toFixed(1)}x the average Indian's footprint (1.9 t CO₂e/year).
-
-Questionnaire data: ${JSON.stringify(data)}.
-
-Generate a JSON response with EXACTLY this structure and no additional text:
-{
-  "name": "string (2-3 words, e.g., 'Sky Rider', 'Metro Maven')",
-  "tagline": "string (one line, max 8 words, poetic and personal)",
-  "emotionalLine": "string (2 sentences, max 30 words, making the impact visceral without judgment)",
-  "icon": "string (single emoji that represents the persona)"
-}
-
-Constraints:
-- No placeholders or incomplete data.
-- The persona name and tagline should match the footprint tier: low (<3t) = positive/light, medium (3-8t) = pragmatic, high (>8t) = awakening.
-- Tone is never preachy or judgmental. Always respectful.`;
+        const { buildPersonaPrompt } = await import('@/lib/gemini-client');
+        const prompt = buildPersonaPrompt(clampedFootprint, percentOfAvg, data);
 
         const result = await model.generateContent(prompt);
         const responseText = result.response.text();
@@ -129,6 +117,7 @@ Constraints:
           breakdown: breakdown.percentages,
           breakdownTCo2: breakdown.tonnes,
           source: 'gemini',
+          customActions: personaData.customActions || [],
         };
 
         return NextResponse.json(persona);

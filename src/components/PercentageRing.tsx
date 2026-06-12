@@ -22,9 +22,9 @@ export const PercentageRing: React.FC<PercentageRingProps> = ({ percentage, colo
           cy="55"
           r={radius}
           fill="none"
-          stroke="#E0E0E0"
+          stroke="#1e293b"
           strokeWidth="8"
-          opacity="0.3"
+          opacity="0.6"
         />
         <circle
           cx="55"
@@ -51,7 +51,7 @@ export const PercentageRing: React.FC<PercentageRingProps> = ({ percentage, colo
           {footprintRatio.toFixed(1)}×
         </text>
       </svg>
-      <p className="text-xs text-gray-400 text-center">
+      <p className="text-xs text-slate-500 text-center">
         vs Indian avg: 1.9 t CO₂e
       </p>
     </div>
