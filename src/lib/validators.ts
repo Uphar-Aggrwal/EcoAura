@@ -3,7 +3,7 @@ export function sanitizeInput(input: string): string {
 }
 
 export function validateQuestionnaireData(data: unknown): boolean {
-  const required = ['transport', 'diet', 'energy', 'shopping', 'flights'];
+  const required = ['housing', 'transport', 'diet', 'energy', 'shopping', 'flights', 'techHabits', 'lifestyle', 'motivation'];
   if (typeof data !== 'object' || !data) return false;
   const obj = data as Record<string, unknown>;
   return required.every(key => key in obj);

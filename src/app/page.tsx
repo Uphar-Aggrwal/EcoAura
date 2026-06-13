@@ -31,8 +31,12 @@ export default function Home() {
           </span>
         </h1>
 
-        <p className="text-lg md:text-2xl text-slate-300 mb-12 leading-relaxed max-w-2xl mx-auto font-light">
-          A premium AI experience that transforms your lifestyle data into a striking, personalized carbon identity.
+        <p className="text-lg md:text-2xl text-slate-300 mb-4 leading-relaxed max-w-2xl mx-auto font-light">
+          A deep psychographic AI assessment that transforms your lifestyle, habits, and motivations into a striking carbon identity.
+        </p>
+        
+        <p className="text-sm md:text-base text-slate-500 mb-12 max-w-xl mx-auto">
+          Powered by Gemini 2.5 Flash · Hyper-personalized insights · A cinematic transmission from your future self in 2050
         </p>
 
         <button
@@ -47,7 +51,7 @@ export default function Home() {
           <div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-600 to-cyan-600 border border-white/20" />
           
           <span className="relative z-10 flex items-center gap-3">
-            Start Your Journey 
+            Begin Assessment 
             <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
@@ -57,15 +61,15 @@ export default function Home() {
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-slate-400 font-medium">
           <div className="glass px-6 py-4 rounded-2xl flex flex-col items-center gap-2 hover:bg-white/5 transition-colors">
             <span className="w-3 h-3 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]" />
-            AI-Powered Analysis
+            Deep Psychographic Quiz
           </div>
           <div className="glass px-6 py-4 rounded-2xl flex flex-col items-center gap-2 hover:bg-white/5 transition-colors">
             <span className="w-3 h-3 rounded-full bg-teal-400 shadow-[0_0_10px_rgba(45,212,191,0.8)]" />
-            Premium 3D Cards
+            Hyper-Personalized AI Insights
           </div>
           <div className="glass px-6 py-4 rounded-2xl flex flex-col items-center gap-2 hover:bg-white/5 transition-colors">
             <span className="w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)]" />
-            Actionable Pledges
+            Echoes from 2050
           </div>
         </div>
       </div>

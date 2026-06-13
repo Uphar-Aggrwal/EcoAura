@@ -8,6 +8,7 @@ import { PersonaIcon } from './PersonaIcon';
 import { ToastNotification } from './ToastNotification';
 import { AnimatedCounter } from './AnimatedCounter';
 import { EarthsVisualization } from './EarthsVisualization';
+import { FutureEchoModal } from './FutureEchoModal';
 import confetti from 'canvas-confetti';
 import { QRCodeSVG } from 'qrcode.react';
 
@@ -19,6 +20,7 @@ export const PersonaCard: React.FC<PersonaCardProps> = ({ persona }) => {
   const router = useRouter();
   const [showCopyFallback, setShowCopyFallback] = useState(false);
   const [toastMessage, setToastMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
+  const [isEchoOpen, setIsEchoOpen] = useState(false);
   
   // Custom Actions handling (fallback to empty if somehow undefined)
   const actionsList = persona.customActions || [];
@@ -269,6 +271,20 @@ export const PersonaCard: React.FC<PersonaCardProps> = ({ persona }) => {
                   </div>
                 </div>
               </div>
+
+              {/* Echo from 2050 Trigger */}
+              <div className="mt-8 pt-8 border-t border-slate-700/50 text-center">
+                <button
+                  onClick={() => setIsEchoOpen(true)}
+                  className="group relative inline-flex items-center justify-center px-8 py-4 rounded-full font-bold text-white transition-all duration-300 transform hover:scale-[1.02] active:scale-95 bg-black border border-slate-700 overflow-hidden shadow-[0_0_20px_rgba(239,68,68,0.15)] hover:shadow-[0_0_30px_rgba(239,68,68,0.3)] hover:border-red-500/50"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-600/20 to-orange-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <span className="relative z-10 flex items-center gap-3 font-mono tracking-wide">
+                    <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
+                    INCOMING TRANSMISSION FROM 2050
+                  </span>
+                </button>
+              </div>
             </div>
 
             {/* Breakdown Bars */}
@@ -402,6 +418,12 @@ export const PersonaCard: React.FC<PersonaCardProps> = ({ persona }) => {
           onClose={() => setToastMessage(null)}
         />
       )}
+
+      <FutureEchoModal 
+        isOpen={isEchoOpen} 
+        onClose={() => setIsEchoOpen(false)} 
+        footprint={persona.footprintTotalTCo2} 
+      />
     </>
   );
 };

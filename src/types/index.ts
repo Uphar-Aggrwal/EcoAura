@@ -1,10 +1,16 @@
 export interface QuestionnaireData {
+  // Core emissions
+  housing: 'apartment' | 'house-small' | 'house-large';
   transport: 'car-daily' | 'car-weekly' | 'public-transit' | 'cycling' | 'walking';
-  transportFreq: number;
-  diet: 'omnivore' | 'pescatarian' | 'vegetarian' | 'vegan';
-  energy: 'grid-heavy' | 'grid-mixed' | 'solar';
-  shopping: 'high' | 'medium' | 'low';
   flights: number;
+  diet: 'omnivore-heavy' | 'omnivore-light' | 'pescatarian' | 'vegetarian' | 'vegan';
+  energy: 'grid-heavy' | 'grid-mixed' | 'solar';
+  
+  // Psychographics
+  shopping: 'fast-fashion' | 'quality-durability' | 'second-hand';
+  techHabits: 'early-adopter' | 'repair-reuse' | 'minimalist';
+  lifestyle: 'homebody' | 'frequent-traveler' | 'social-butterfly';
+  motivation: 'cost' | 'convenience' | 'environment' | 'health';
 }
 
 export interface Persona {

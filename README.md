@@ -6,20 +6,19 @@
 
 Users lack emotional, personalized understanding of their carbon footprint. Simple dashboards don't drive behavior change. This app bridges that gap by generating a custom "EcoAura" that makes the impact visceral and shareable.
 
-### Solution
+## 🔥 The "Killer Features"
 
-1. **Questionnaire:** Collect lifestyle data (transport, diet, energy, shopping, flights).
-2. **AI Persona Generation:** Gemini 2.5 Flash generates a personalized name, tagline, and emotional insight.
-3. **Shareable 3D Card:** A dual-column, interactive dark-mode card featuring 3D tilt effects, an animated count-up, and an "X Earths" visualizer.
-4. **Action Pledges:** Users log commitments directly on the card with AI-tailored micro-actions and a celebratory confetti animation.
+1. **Deep Psychographic Carbon Identity**: Instead of a generic 5-question calculator, EcoAura uses a 10-point psychographic assessment (measuring motivations, tech habits, shopping philosophy) to create a highly distinct, 100% unique persona for every user.
+2. **Echoes from 2050 (Interactive Narrative)**: Users receive a cinematic, emotionally resonant "Transmission from 2050". The AI adopts the persona of the user's future self. Based on their footprint, the UI dynamically changes background visuals (Utopia, Transition, Smog, Dystopia) using a Ken Burns effect while the narrative streams via a typewriter effect.
+3. **Hyper-Personalized Action Pledges**: Generic advice is banned. If a user's motivation is "Cost Savings", the AI calculates financial waste. If their motivation is "Convenience", the AI suggests frictionless swaps.
+4. **Cinematic UI/UX**: Step-by-step fluid onboarding, 3D tilt-responsive shareable cards, Confetti pledges, and dark-mode glassmorphic aesthetics.
 
-### Tech Stack
+## 🏗️ Architecture & Stack
 
 - **Frontend:** Next.js 14 (App Router), React 18, TailwindCSS
 - **Backend:** Next.js API Routes, TypeScript
 - **AI:** Gemini 2.5 Flash API (with hard fallback persona pool for resilience)
 - **Deployment:** Vercel Hobby free tier
-- **Testing:** Jest + Playwright
 
 ### Key Features
 
