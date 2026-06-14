@@ -79,8 +79,9 @@ export const PersonaCard: React.FC<PersonaCardProps> = ({ persona }) => {
             applyShift: (d) => ({ ...d, shopping: 'second-hand' })
           });
         }
-        
-        setShiftOptions(options.slice(0, 3));
+        Promise.resolve().then(() => {
+          setShiftOptions(options.slice(0, 3));
+        });
       } catch (e) {
         console.error("Failed to parse data for shift options", e);
       }
@@ -194,27 +195,6 @@ export const PersonaCard: React.FC<PersonaCardProps> = ({ persona }) => {
     showToast('Pledge committed! 🌱', 'success');
   };
 
-  // 3D Tilt Effect
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!tiltRef.current) return;
-    const rect = tiltRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    
-    const rotateX = ((y - centerY) / centerY) * -10; // max 10 deg
-    const rotateY = ((x - centerX) / centerX) * 10;
-    
-    tiltRef.current.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-  };
-
-  const handleMouseLeave = () => {
-    if (!tiltRef.current) return;
-    tiltRef.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-  };
-
   const shareUrl = typeof window !== 'undefined' ? window.location.origin : 'https://ecoaura.app';
 
   return (
@@ -233,10 +213,8 @@ export const PersonaCard: React.FC<PersonaCardProps> = ({ persona }) => {
           {/* LEFT COLUMN: The Exportable "Trading Card" */}
           <div className="md:col-span-5 lg:col-span-4 flex justify-center perspective-[1000px]">
             <div 
-              className="w-full max-w-sm tilt-card"
+              className="w-full max-w-sm tilt-card hover:-translate-y-2 transition-transform duration-300"
               ref={tiltRef}
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
             >
               <div
                 ref={cardRef}
@@ -314,7 +292,7 @@ export const PersonaCard: React.FC<PersonaCardProps> = ({ persona }) => {
                 style={{ borderLeft: `4px solid ${persona.ringColor}`, background: `${persona.ringColor}10` }}
               >
                 <p className="text-slate-300 font-medium leading-relaxed text-lg">
-                  "{persona.emotionalLine}"
+                  &quot;{persona.emotionalLine}&quot;
                 </p>
               </div>
 

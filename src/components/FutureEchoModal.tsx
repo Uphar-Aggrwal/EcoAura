@@ -21,13 +21,17 @@ export const FutureEchoModal: React.FC<FutureEchoModalProps> = ({ isOpen, onClos
 
   useEffect(() => {
     if (!isOpen) {
-      setDisplayedText('');
-      setMessage('');
-      setLoading(true);
+      Promise.resolve().then(() => {
+        setDisplayedText('');
+        setMessage('');
+        setLoading(true);
+      });
       return;
     }
 
-    setShowGlitch(true);
+    Promise.resolve().then(() => {
+      setShowGlitch(true);
+    });
     setTimeout(() => setShowGlitch(false), 800);
 
     const fetchEcho = async () => {
@@ -69,7 +73,9 @@ export const FutureEchoModal: React.FC<FutureEchoModalProps> = ({ isOpen, onClos
     if (loading || !message) return;
     
     let i = 0;
-    setDisplayedText('');
+    Promise.resolve().then(() => {
+      setDisplayedText('');
+    });
     
     const interval = setInterval(() => {
       setDisplayedText(message.substring(0, i + 1));
@@ -147,30 +153,6 @@ export const FutureEchoModal: React.FC<FutureEchoModalProps> = ({ isOpen, onClos
         </div>
       </div>
 
-      {/* Inline styles for custom animations */}
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes ken-burns {
-          0% { transform: scale(1.0); }
-          100% { transform: scale(1.15); }
-        }
-        .animate-ken-burns {
-          animation: ken-burns 30s ease-out forwards;
-        }
-        @keyframes glitch-overlay {
-          0% { opacity: 0; background-position: 0 0; }
-          20% { opacity: 1; background-position: -20px 20px; }
-          40% { opacity: 0; background-position: 20px -20px; }
-          60% { opacity: 1; background-position: -10px 10px; }
-          80% { opacity: 0; background-position: 10px -10px; }
-          100% { opacity: 1; background-position: 0 0; }
-        }
-        .animate-glitch-overlay {
-          animation: glitch-overlay 0.5s ease-in-out forwards;
-        }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
-      `}} />
     </div>
   );
 };

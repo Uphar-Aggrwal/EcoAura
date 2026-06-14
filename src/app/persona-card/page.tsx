@@ -11,16 +11,18 @@ export default function PersonaCardPage() {
   const [persona, setPersona] = useState<Persona | null>(null);
 
   useEffect(() => {
-    const stored = sessionStorage.getItem('persona');
-    if (!stored) {
-      router.push('/');
-    } else {
-      try {
-        setPersona(JSON.parse(stored));
-      } catch {
+    Promise.resolve().then(() => {
+      const stored = sessionStorage.getItem('persona');
+      if (!stored) {
         router.push('/');
+      } else {
+        try {
+          setPersona(JSON.parse(stored));
+        } catch {
+          router.push('/');
+        }
       }
-    }
+    });
   }, [router]);
 
   if (!persona) {
