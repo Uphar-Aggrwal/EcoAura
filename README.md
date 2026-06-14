@@ -24,11 +24,13 @@ Users lack emotional, personalized understanding of their carbon footprint. Simp
 ### Key Features
 
 - ✅ **Premium Dark Mode UI:** Glassmorphism, neon glows, and ambient mesh backgrounds.
-- ✅ **Interactive 3D Card:** Mouse-driven 3D tilt effect on the desktop persona card.
 - ✅ **Micro-Action Pledges:** Dynamic AI-generated actions with confetti commitment buttons.
 - ✅ **Rich Visualizations:** "X Earths" icons and Global Context Slider comparing to regional averages.
 - ✅ **Social Virality Loop:** Built-in QR code generator and rich OpenGraph meta tags.
 - ✅ **PWA Ready:** Installable as a Progressive Web App on mobile devices.
+- ✅ **Performance Optimized:** Heavy components (modal, confetti, QR, earth viz) are lazy-loaded via `next/dynamic`.
+- ✅ **Accessibility:** WCAG-compliant with `aria-label` on all interactive elements.
+- ✅ **Zero Security Risks:** No `dangerouslySetInnerHTML`. All animations are in global CSS.
 - ✅ No hardcoded mock data (AI-generated personas or fallback pool)
 - ✅ Graceful error handling on Gemini rate limits (fallback persona pool)
 - ✅ Rate-limiting on `/api/generate-persona` (10 reqs/min per IP)
@@ -102,6 +104,7 @@ src/
     ├── carbon-calculator.test.ts  # Jest unit tests
     ├── validators.test.ts         # Jest unit tests
     ├── persona-fallback.test.ts   # Jest unit tests
+    ├── gemini-client.test.ts      # Jest unit tests — Gemini API wrapper coverage
     └── e2e/
         └── full-flow.spec.ts      # Playwright E2E test
 ```
