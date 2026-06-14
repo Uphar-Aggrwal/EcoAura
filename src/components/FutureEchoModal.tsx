@@ -7,9 +7,11 @@ interface FutureEchoModalProps {
   isOpen: boolean;
   onClose: () => void;
   footprint: number;
+  shiftedData?: QuestionnaireData;
+  shiftDecision?: string;
 }
 
-export const FutureEchoModal: React.FC<FutureEchoModalProps> = ({ isOpen, onClose, footprint }) => {
+export const FutureEchoModal: React.FC<FutureEchoModalProps> = ({ isOpen, onClose, footprint, shiftedData, shiftDecision }) => {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
   const [tier, setTier] = useState<'utopia' | 'transition' | 'smog' | 'dystopia'>('transition');
@@ -32,14 +34,16 @@ export const FutureEchoModal: React.FC<FutureEchoModalProps> = ({ isOpen, onClos
         const stored = sessionStorage.getItem('questionnaireData');
         const data: QuestionnaireData | null = stored ? JSON.parse(stored) : null;
         
-        if (!data) {
+        const dataToUse = shiftedData || data;
+
+        if (!dataToUse) {
           throw new Error('No data found');
         }
 
         const res = await fetch('/api/echo-2050', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ footprint, data }),
+          body: JSON.stringify({ footprint, data: dataToUse, shiftDecision }),
         });
 
         if (!res.ok) throw new Error('API Error');
@@ -57,7 +61,7 @@ export const FutureEchoModal: React.FC<FutureEchoModalProps> = ({ isOpen, onClos
     };
 
     fetchEcho();
-  }, [isOpen, footprint]);
+  }, [isOpen, footprint, shiftedData, shiftDecision]);
 
   // Typewriter effect
   useEffect(() => {

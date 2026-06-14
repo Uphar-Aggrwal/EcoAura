@@ -2,7 +2,8 @@
 
 import React, { useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { Persona } from '@/types';
+import { Persona, QuestionnaireData } from '@/types';
+import { calculateAnnualFootprint } from '@/lib/carbon-calculator';
 import { PercentageRing } from './PercentageRing';
 import { PersonaIcon } from './PersonaIcon';
 import { ToastNotification } from './ToastNotification';
@@ -16,11 +17,94 @@ interface PersonaCardProps {
   persona: Persona;
 }
 
+interface ShiftOption {
+  label: string;
+  decision: string;
+  applyShift: (data: QuestionnaireData) => QuestionnaireData;
+}
+
 export const PersonaCard: React.FC<PersonaCardProps> = ({ persona }) => {
   const router = useRouter();
   const [showCopyFallback, setShowCopyFallback] = useState(false);
   const [toastMessage, setToastMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
   const [isEchoOpen, setIsEchoOpen] = useState(false);
+  
+  // Echo Shift Simulator State
+  const [shiftOptions, setShiftOptions] = React.useState<ShiftOption[]>([]);
+  const [shiftedData, setShiftedData] = React.useState<QuestionnaireData | undefined>();
+  const [shiftDecision, setShiftDecision] = React.useState<string | undefined>();
+  const [activeFootprint, setActiveFootprint] = React.useState<number>(persona.footprintTotalTCo2);
+
+  React.useEffect(() => {
+    const stored = sessionStorage.getItem('questionnaireData');
+    if (stored) {
+      try {
+        const data: QuestionnaireData = JSON.parse(stored);
+        const options: ShiftOption[] = [];
+        
+        if (data.transport === 'car-daily' || data.transport === 'car-weekly') {
+          options.push({
+            label: "What if I took public transit?",
+            decision: "I switched from driving to public transit.",
+            applyShift: (d) => ({ ...d, transport: 'public-transit' })
+          });
+        }
+        if (data.diet === 'omnivore-heavy' || data.diet === 'omnivore-light') {
+          options.push({
+            label: "What if I went vegetarian?",
+            decision: "I adopted a vegetarian diet.",
+            applyShift: (d) => ({ ...d, diet: 'vegetarian' })
+          });
+        }
+        if (data.energy === 'grid-heavy' || data.energy === 'grid-mixed') {
+          options.push({
+            label: "What if I switched to solar?",
+            decision: "I installed solar panels and switched to renewable energy.",
+            applyShift: (d) => ({ ...d, energy: 'solar' })
+          });
+        }
+        if (data.flights > 0) {
+          options.push({
+            label: "What if I stopped flying?",
+            decision: "I eliminated air travel completely.",
+            applyShift: (d) => ({ ...d, flights: 0 })
+          });
+        }
+        
+        if (options.length < 3 && data.shopping !== 'second-hand') {
+          options.push({
+            label: "What if I only bought second-hand?",
+            decision: "I stopped buying fast fashion and switched entirely to second-hand goods.",
+            applyShift: (d) => ({ ...d, shopping: 'second-hand' })
+          });
+        }
+        
+        setShiftOptions(options.slice(0, 3));
+      } catch (e) {
+        console.error("Failed to parse data for shift options", e);
+      }
+    }
+  }, []);
+
+  const handleEchoShift = (option: ShiftOption | null) => {
+    if (!option) {
+      setShiftedData(undefined);
+      setShiftDecision(undefined);
+      setActiveFootprint(persona.footprintTotalTCo2);
+      setIsEchoOpen(true);
+      return;
+    }
+    
+    const stored = sessionStorage.getItem('questionnaireData');
+    if (stored) {
+      const data: QuestionnaireData = JSON.parse(stored);
+      const newData = option.applyShift(data);
+      setShiftedData(newData);
+      setShiftDecision(option.decision);
+      setActiveFootprint(calculateAnnualFootprint(newData));
+      setIsEchoOpen(true);
+    }
+  };
   
   // Custom Actions handling (fallback to empty if somehow undefined)
   const actionsList = persona.customActions || [];
@@ -275,7 +359,7 @@ export const PersonaCard: React.FC<PersonaCardProps> = ({ persona }) => {
               {/* Echo from 2050 Trigger */}
               <div className="mt-8 pt-8 border-t border-slate-700/50 text-center">
                 <button
-                  onClick={() => setIsEchoOpen(true)}
+                  onClick={() => handleEchoShift(null)}
                   className="group relative inline-flex items-center justify-center px-8 py-4 rounded-full font-bold text-white transition-all duration-300 transform hover:scale-[1.02] active:scale-95 bg-black border border-slate-700 overflow-hidden shadow-[0_0_20px_rgba(239,68,68,0.15)] hover:shadow-[0_0_30px_rgba(239,68,68,0.3)] hover:border-red-500/50"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-red-600/20 to-orange-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -285,6 +369,34 @@ export const PersonaCard: React.FC<PersonaCardProps> = ({ persona }) => {
                   </span>
                 </button>
               </div>
+
+              {/* Echo Shift Simulator */}
+              {shiftOptions.length > 0 && (
+                <div className="mt-8 pt-8 border-t border-slate-700/50">
+                  <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 text-center">
+                    Echo Shift Simulator
+                  </h3>
+                  <p className="text-xs text-slate-500 text-center mb-6 max-w-sm mx-auto leading-relaxed">
+                    How does a single decision reshape your future? Select a hypothetical choice to recalculate your footprint and regenerate your 2050 timeline.
+                  </p>
+                  <div className="flex flex-col gap-3 max-w-md mx-auto">
+                    {shiftOptions.map((opt, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => handleEchoShift(opt)}
+                        className="group flex items-center justify-between px-5 py-3 rounded-xl bg-slate-800/40 border border-slate-700 hover:border-cyan-500/50 hover:bg-slate-800 transition-all text-left"
+                      >
+                        <span className="text-sm font-medium text-slate-300 group-hover:text-cyan-300 transition-colors">
+                          {opt.label}
+                        </span>
+                        <span className="text-cyan-500/50 group-hover:text-cyan-400 font-mono text-lg transition-colors">
+                          →
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Breakdown Bars */}
@@ -422,7 +534,9 @@ export const PersonaCard: React.FC<PersonaCardProps> = ({ persona }) => {
       <FutureEchoModal 
         isOpen={isEchoOpen} 
         onClose={() => setIsEchoOpen(false)} 
-        footprint={persona.footprintTotalTCo2} 
+        footprint={activeFootprint} 
+        shiftedData={shiftedData}
+        shiftDecision={shiftDecision}
       />
     </>
   );
