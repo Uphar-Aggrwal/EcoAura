@@ -11,11 +11,15 @@ describe('validators', () => {
   describe('validateQuestionnaireData', () => {
     it('should validate complete questionnaire data', () => {
       const valid = {
+        housing: 'apartment',
         transport: 'walking',
         flights: 0,
         diet: 'vegan',
         energy: 'solar',
-        shopping: 'low',
+        shopping: 'second-hand',
+        techHabits: 'minimalist',
+        lifestyle: 'homebody',
+        motivation: 'environment'
       };
       expect(validateQuestionnaireData(valid)).toBe(true);
     });

@@ -42,6 +42,7 @@ export default function Home() {
         <button
           id="start-journey-btn"
           onClick={() => router.push('/questionnaire')}
+          aria-label="Begin EcoAura Assessment"
           className="group relative inline-flex items-center justify-center px-10 py-5 rounded-full text-lg font-bold text-white transition-all duration-300 transform hover:scale-[1.05] active:scale-95"
         >
           {/* Button Glow Effect */}

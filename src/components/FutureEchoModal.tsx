@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { QuestionnaireData } from '@/types';
 
 interface FutureEchoModalProps {
@@ -89,10 +90,15 @@ export const FutureEchoModal: React.FC<FutureEchoModalProps> = ({ isOpen, onClos
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm overflow-hidden">
       
       {/* Background with Ken Burns effect */}
-      <div 
-        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat animate-ken-burns"
-        style={{ backgroundImage: `url('${bgImage}')` }}
-      />
+      <div className="absolute inset-0 z-0 animate-ken-burns">
+        <Image 
+          src={bgImage}
+          alt={`Future ${tier} scenario`}
+          fill
+          priority
+          className="object-cover"
+        />
+      </div>
       
       {/* Gradient Overlays for text readability */}
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#0b0f19]/80 via-transparent to-[#0b0f19]/90" />

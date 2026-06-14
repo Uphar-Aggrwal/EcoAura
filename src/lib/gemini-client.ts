@@ -2,6 +2,11 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 let geminiInstance: GoogleGenerativeAI | null = null;
 
+/**
+ * Initializes and returns a singleton instance of the Google Generative AI client.
+ * @throws {Error} If the GEMINI_API_KEY environment variable is missing.
+ * @returns {GoogleGenerativeAI} The initialized Gemini API client.
+ */
 export function getGeminiClient(): GoogleGenerativeAI {
   if (!geminiInstance) {
     const apiKey = process.env.GEMINI_API_KEY;
@@ -13,6 +18,13 @@ export function getGeminiClient(): GoogleGenerativeAI {
   return geminiInstance;
 }
 
+/**
+ * Constructs the hyper-personalized prompt to generate the user's Carbon Persona.
+ * @param {number} footprint - The user's total annual carbon footprint.
+ * @param {number} percentOfAvg - The user's footprint as a percentage of the national average.
+ * @param {Record<string, unknown>} data - The raw psychographic and lifestyle data.
+ * @returns {string} The formatted prompt to send to the Gemini 2.5 Flash model.
+ */
 export function buildPersonaPrompt(footprint: number, percentOfAvg: number, data: Record<string, unknown>): string {
   return `You are an advanced carbon footprint persona generator. You create deeply personal, psychologically resonant personas based on granular lifestyle and behavioral data.
 

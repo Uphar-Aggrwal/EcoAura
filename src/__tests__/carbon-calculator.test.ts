@@ -3,26 +3,39 @@ import { calculateAnnualFootprint, calculatePercentOfAverage } from '../lib/carb
 describe('calculateAnnualFootprint', () => {
   it('should calculate footprint for omnivore commuter', () => {
     const result = calculateAnnualFootprint({
+      housing: 'house-large',
       transport: 'car-daily',
-      transportFreq: 100,
-      diet: 'omnivore',
-      energy: 'grid-mixed',
-      shopping: 'high',
+      diet: 'omnivore-heavy',
+      energy: 'grid-heavy',
+      shopping: 'fast-fashion',
       flights: 3,
+      techHabits: 'early-adopter',
+      lifestyle: 'frequent-traveler',
+      motivation: 'convenience'
     });
     expect(result).toBeGreaterThan(8);
   });
 
   it('should calculate footprint for eco-conscious user', () => {
     const result = calculateAnnualFootprint({
+      housing: 'apartment',
       transport: 'cycling',
-      transportFreq: 0,
       diet: 'vegan',
       energy: 'solar',
-      shopping: 'low',
+      shopping: 'second-hand',
       flights: 0,
+      techHabits: 'minimalist',
+      lifestyle: 'homebody',
+      motivation: 'environment'
     });
-    expect(result).toBeLessThan(2);
+    // Expected footprint calculation: 
+    // Transport: 0 + 0 = 0
+    // Diet: 1.1
+    // Energy & Housing: 0.3 * 0.8 = 0.24
+    // Shopping & Tech: 0.3 + 0.2 = 0.5
+    // Lifestyle: 0.5
+    // Total = 0 + 1.1 + 0.24 + 0.5 + 0.5 = 2.34
+    expect(result).toBeLessThan(3.0);
   });
 });
 

@@ -7,11 +7,12 @@ import { calculateAnnualFootprint } from '@/lib/carbon-calculator';
 import { PercentageRing } from './PercentageRing';
 import { PersonaIcon } from './PersonaIcon';
 import { ToastNotification } from './ToastNotification';
-import { AnimatedCounter } from './AnimatedCounter';
-import { EarthsVisualization } from './EarthsVisualization';
-import { FutureEchoModal } from './FutureEchoModal';
-import confetti from 'canvas-confetti';
-import { QRCodeSVG } from 'qrcode.react';
+import dynamic from 'next/dynamic';
+
+const FutureEchoModal = dynamic(() => import('./FutureEchoModal').then(mod => mod.FutureEchoModal), { ssr: false });
+const EarthsVisualization = dynamic(() => import('./EarthsVisualization').then(mod => mod.EarthsVisualization), { ssr: false });
+const AnimatedCounter = dynamic(() => import('./AnimatedCounter').then(mod => mod.AnimatedCounter), { ssr: false });
+const QRCodeSVG = dynamic(() => import('qrcode.react').then(mod => mod.QRCodeSVG), { ssr: false });
 
 interface PersonaCardProps {
   persona: Persona;
@@ -168,7 +169,7 @@ export const PersonaCard: React.FC<PersonaCardProps> = ({ persona }) => {
     }
   };
 
-  const handlePledge = (idx: number, e: React.MouseEvent) => {
+  const handlePledge = async (idx: number, e: React.MouseEvent) => {
     if (pledgedActions[idx]) return; // already pledged
     
     // Confetti effect originating from the button click
@@ -176,6 +177,7 @@ export const PersonaCard: React.FC<PersonaCardProps> = ({ persona }) => {
     const x = (rect.left + rect.width / 2) / window.innerWidth;
     const y = (rect.top + rect.height / 2) / window.innerHeight;
     
+    const confetti = (await import('canvas-confetti')).default;
     confetti({
       particleCount: 100,
       spread: 70,
@@ -360,6 +362,7 @@ export const PersonaCard: React.FC<PersonaCardProps> = ({ persona }) => {
               <div className="mt-8 pt-8 border-t border-slate-700/50 text-center">
                 <button
                   onClick={() => handleEchoShift(null)}
+                  aria-label="View Transmission From 2050"
                   className="group relative inline-flex items-center justify-center px-8 py-4 rounded-full font-bold text-white transition-all duration-300 transform hover:scale-[1.02] active:scale-95 bg-black border border-slate-700 overflow-hidden shadow-[0_0_20px_rgba(239,68,68,0.15)] hover:shadow-[0_0_30px_rgba(239,68,68,0.3)] hover:border-red-500/50"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-red-600/20 to-orange-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -384,6 +387,7 @@ export const PersonaCard: React.FC<PersonaCardProps> = ({ persona }) => {
                       <button
                         key={idx}
                         onClick={() => handleEchoShift(opt)}
+                        aria-label={`Simulate: ${opt.label}`}
                         className="group flex items-center justify-between px-5 py-3 rounded-xl bg-slate-800/40 border border-slate-700 hover:border-cyan-500/50 hover:bg-slate-800 transition-all text-left"
                       >
                         <span className="text-sm font-medium text-slate-300 group-hover:text-cyan-300 transition-colors">

@@ -1,6 +1,11 @@
 import { QuestionnaireData } from '@/types';
 import { INDIAN_AVERAGE_FOOTPRINT } from './constants';
 
+/**
+ * Calculates the total annual carbon footprint based on the user's questionnaire data.
+ * @param {QuestionnaireData} data - The psychographic and lifestyle data collected from the user.
+ * @returns {number} The estimated total carbon footprint in tonnes of CO2e per year.
+ */
 export function calculateAnnualFootprint(data: QuestionnaireData): number {
   let total = 0;
 
@@ -65,6 +70,12 @@ export function calculateAnnualFootprint(data: QuestionnaireData): number {
   return Math.round(total * 10) / 10;
 }
 
+/**
+ * Calculates the categorical breakdown (transport, food, energy) of the footprint.
+ * @param {QuestionnaireData} data - The user's questionnaire data.
+ * @param {number} total - The previously calculated total annual footprint.
+ * @returns {{ percentages: { transport: number, food: number, energy: number }, tonnes: { transport: number, food: number, energy: number } }} The percentage and absolute breakdown of emissions.
+ */
 export function calculateBreakdown(data: QuestionnaireData, total: number) {
   const tTransport = 
     (data.transport === 'car-daily' ? 13 : data.transport === 'car-weekly' ? 4.16 : data.transport === 'public-transit' ? 1.04 : 0) + 
@@ -89,6 +100,11 @@ export function calculateBreakdown(data: QuestionnaireData, total: number) {
   };
 }
 
+/**
+ * Converts the absolute footprint into a percentage relative to the Indian average.
+ * @param {number} footprint - The total calculated footprint.
+ * @returns {number} The footprint expressed as a percentage of the average (e.g., 200 = 2x the average).
+ */
 export function calculatePercentOfAverage(footprint: number): number {
   return Math.round((footprint / INDIAN_AVERAGE_FOOTPRINT) * 100);
 }
