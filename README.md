@@ -10,8 +10,9 @@ Users lack emotional, personalized understanding of their carbon footprint. Simp
 
 1. **Deep Psychographic Carbon Identity**: Instead of a generic 5-question calculator, EcoAura uses a 10-point psychographic assessment (measuring motivations, tech habits, shopping philosophy) to create a highly distinct, 100% unique persona for every user.
 2. **Echoes from 2050 (Interactive Narrative)**: Users receive a cinematic, emotionally resonant "Transmission from 2050". The AI adopts the persona of the user's future self. Based on their footprint, the UI dynamically changes background visuals (Utopia, Transition, Smog, Dystopia) using a Ken Burns effect while the narrative streams via a typewriter effect.
-3. **Hyper-Personalized Action Pledges**: Generic advice is banned. If a user's motivation is "Cost Savings", the AI calculates financial waste. If their motivation is "Convenience", the AI suggests frictionless swaps.
-4. **Cinematic UI/UX**: Step-by-step fluid onboarding, 3D tilt-responsive shareable cards, Confetti pledges, and dark-mode glassmorphic aesthetics.
+3. **Echo Shift Simulator (Decision-Point Nudge)**: Users can select a hypothetical decision (e.g. "What if I took public transit?") which dynamically recalculates their footprint and seamlessly regenerates the 2050 transmission, proving how a single choice shifts their timeline.
+4. **Hyper-Personalized Action Pledges**: Generic advice is banned. If a user's motivation is "Cost Savings", the AI calculates financial waste. If their motivation is "Convenience", the AI suggests frictionless swaps.
+5. **Cinematic UI/UX**: Step-by-step fluid onboarding, 3D tilt-responsive shareable cards, Confetti pledges, and dark-mode glassmorphic aesthetics.
 
 ## 🏗️ Architecture & Stack
 
